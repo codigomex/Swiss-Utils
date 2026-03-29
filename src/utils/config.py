@@ -17,11 +17,8 @@ TMP_DIR: Final[Path] = Path(gettempdir()) / "PyProjects"
 
 # editor de texto según el os, definimos el mapa de opciones
 _os_apps: dict[str, str] = {"nt": r"C:\Windows\notepad.exe", "posix": "kwrite"}
-
-# Validamos antes de asignar
 if os.name not in _os_apps:
     raise RuntimeError(f"OS Desconocido: {os.name}!!!")
-
 TXT_APP: Final[str] = _os_apps[os.name]
 
 # formato general para fechas
