@@ -1,0 +1,10 @@
+# Configuración global
+line-length = 88
+
+[lint]
+# Activa el aviso de línea demasiado larga
+select = ["E501"]
+
+[format]
+# Comillas simples obligatorias
+quote-style = "single"

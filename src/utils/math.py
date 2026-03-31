@@ -1,4 +1,4 @@
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import ROUND_HALF_UP, Decimal, getcontext
 
 
 def precise_round(
@@ -62,3 +62,18 @@ def qseconds(st_time: str) -> int:
     except ValueError as e:
         raise ValueError(f'Error en el formato de tiempo: {st_time}') from e
 
+
+def div_prec(n: int | float | str, d: int | float | str, precision: int =6 ):
+    """
+    Divide dos números con una precisión dada, notar que devuelve
+    un Decimal.
+    """
+    # 1. Preparamos la "calculadora" con margen de error (8 dígitos)
+    getcontext().prec = precision + 2 
+    
+    # 2. Hacemos la división (internamente tiene 8 dígitos)
+    dirty = Decimal(str(n)) / Decimal(str(d)) 
+    
+    # 3. Limpiamos y dejamos exactamente los decimales pedidos
+    # Esto es lo que tú ves al final.
+    return dirty.quantize(Decimal(f"1.{'0' * precision}"))

@@ -12,12 +12,12 @@ from .console import (
     tellme,
     tobool,
     waiti,
-    window_title
+    window_title,
 )
 from .data import comp_dicts, show_data
 from .format import fmt_tm, random_string, str_now
 from .forms import pic_dir, pic_file
-from .math import precise_round, qseconds
+from .math import div_prec, precise_round, qseconds
 from .py import inmutable
 from .system import (
     exec_file,
@@ -28,51 +28,52 @@ from .system import (
     show_tmp,
     tmp_fname,
 )
-from .units import px_to_mm, mm_to_pt, in_to_pt, px_to_pt
+from .units import in_to_pt, mm_to_pt, px_to_mm, px_to_pt
 
 # El __all__ le dice a Basedpyright y a Python qué nombres
 # se exportan oficialmente desde este paquete.
 __all__ = [
     # Console
-    "ask_valida",
-    "clear",
-    "pparr",
-    "window_title",
-    "op_yn",
-    "waiti",
-    "tellme",
-    "tobool",
-    "ask_date",
-    "ask_tipo",
-    "ask_varios",
-    "ask_unico",
-    "ask_date_fmt_iso8601",
+    'ask_valida',
+    'clear',
+    'pparr',
+    'window_title',
+    'op_yn',
+    'waiti',
+    'tellme',
+    'tobool',
+    'ask_date',
+    'ask_tipo',
+    'ask_varios',
+    'ask_unico',
+    'ask_date_fmt_iso8601',
     # Data
-    "comp_dicts",
-    "show_data",
+    'comp_dicts',
+    'show_data',
     # Format
-    "random_string",
-    "str_now",
-    "fmt_tm",
+    'random_string',
+    'str_now',
+    'fmt_tm',
     # Forms
-    "pic_dir",
-    "pic_file",
+    'pic_dir',
+    'pic_file',
     # Math
-    "precise_round",
-    "qseconds",
+    'precise_round',
+    'qseconds',
+    'div_prec',
     # Py
-    "inmutable",
+    'inmutable',
     # System
-    "exec_file",
-    "init_tmp",
-    "salir",
-    "show_tmp",
-    "tmp_fname",
-    "file_check",
-    "get_user_input",
+    'exec_file',
+    'init_tmp',
+    'salir',
+    'show_tmp',
+    'tmp_fname',
+    'file_check',
+    'get_user_input',
     # Units
-    "px_to_mm",
-    "mm_to_pt",
-    "in_to_pt",
-    "px_to_pt",
+    'px_to_mm',
+    'mm_to_pt',
+    'in_to_pt',
+    'px_to_pt',
 ]
