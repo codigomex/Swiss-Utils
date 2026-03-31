@@ -63,7 +63,9 @@ def qseconds(st_time: str) -> int:
         raise ValueError(f'Error en el formato de tiempo: {st_time}') from e
 
 
-def div_prec(n: int | float | str, d: int | float | str, precision: int =6 ):
+def div_prec(
+    n: int | float | str, d: int | float | str, precision: int = 6
+) -> Decimal:
     """
     Divide dos números con una precisión dada, notar que devuelve
     un Decimal.
