@@ -2,12 +2,12 @@ import os
 import shutil
 import sys
 from pathlib import Path
-from subprocess import Popen, DEVNULL, check_call
+from subprocess import DEVNULL, Popen, check_call
 from time import sleep
 from typing import Never
 
 from .config import SNG, TMP_DIR, TXT_APP
-from .console import pparr, ask_valida
+from .console import ask_valida, pparr
 from .format import random_string, str_now
 
 
@@ -17,18 +17,25 @@ def exec_file(file_path: Path) -> bool:
     :param file_path: ruta al archivo
     :return: bool indicando exito
     """
-    if sys.platform == "win32":
+    if sys.platform == 'win32':
         os.startfile(path=file_path)
         return True
+
+    elif sys.platform == 'darwin':
+        with open(os.devnull, 'w') as f:
+            check_call(['open', file_path], stdout=f, stderr=f)
+        return True
+
     elif os.name == 'posix':
         with open(os.devnull, 'w') as f:
             check_call(['xdg-open', file_path], stdout=f, stderr=f)
         return True
+
     else:
         return False
 
 
-def salir(msje: str='', out_code: int=0) -> Never:
+def salir(msje: str = '', out_code: int = 0) -> Never:
     """
     Sale del programa
     :param msje: mensaje anunciando porqué se sale
@@ -43,7 +50,7 @@ def salir(msje: str='', out_code: int=0) -> Never:
     sys.exit(out_code)
 
 
-def show_tmp(st: str, espera: bool=False) -> None:
+def show_tmp(st: str, espera: bool = False) -> None:
     """
     Recibe un str y lo guarda en un archivo de texto temporal en
     el folder temporal definido globalmente, para ello genera un
@@ -62,11 +69,7 @@ def show_tmp(st: str, espera: bool=False) -> None:
     with open(fname, 'w', encoding='utf8') as f:
         f.write(st)
     # lo muestra y sale
-    av: Popen[bytes] = Popen[bytes](
-        [TXT_APP, fname],
-        stdout=DEVNULL,
-        stderr=DEVNULL
-    )
+    av: Popen[bytes] = Popen[bytes]([*TXT_APP, fname], stdout=DEVNULL, stderr=DEVNULL)
     if espera:
         av.wait()
 
@@ -84,7 +87,7 @@ def tmp_fname(ext: str) -> Path:
 
     while True:
         # nombre de archivo
-        name: str = f"{str_now()}_{random_string(3)}.{ext}"
+        name: str = f'{str_now()}_{random_string(3)}.{ext}'
         fname: Path = TMP_DIR / name
 
         # revisamos si existe
@@ -97,10 +100,8 @@ def tmp_fname(ext: str) -> Path:
         else:
             sleep(1)
 
-    
 
-
-def init_tmp(borrar: bool=False) -> None:
+def init_tmp(borrar: bool = False) -> None:
     """
     Si no existe el directorio temporal, lo genera
     :return: nada
@@ -140,7 +141,7 @@ def file_check(filepath: Path) -> None:
                 exit()
 
 
-def get_user_input(q: str='') -> list[str]:
+def get_user_input(q: str = '') -> list[str]:
     """
     Pregunta la pregunta "q" y abre un archivo de texto para dejar que el usuario escriba
     la respuesta a la pregunta, se regresa la respuesta como una lista de strs
@@ -154,11 +155,10 @@ def get_user_input(q: str='') -> list[str]:
     fn: Path = tmp_fname('txt')
     with open(fn, 'w', encoding='utf8') as _:
         pass
-    proc = Popen([TXT_APP, fn])
+    proc = Popen([*TXT_APP, fn])
     proc.wait()
 
     with open(fn, mode='rt', encoding='utf8') as f:
         data: str = f.read()
 
     return data.splitlines()
-

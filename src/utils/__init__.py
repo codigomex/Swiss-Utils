@@ -28,7 +28,7 @@ from .system import (
     show_tmp,
     tmp_fname,
 )
-from .units import in_to_pt, mm_to_pt, px_to_mm, px_to_pt
+from .units import in_to_pt, mm_to_pt, px_to_mm, px_to_pt, pt_to_mm, pt_to_in
 
 # El __all__ le dice a Basedpyright y a Python qué nombres
 # se exportan oficialmente desde este paquete.
@@ -76,4 +76,6 @@ __all__ = [
     'mm_to_pt',
     'in_to_pt',
     'px_to_pt',
+    'pt_to_mm',
+    'pt_to_in',
 ]
