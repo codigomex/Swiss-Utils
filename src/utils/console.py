@@ -100,8 +100,8 @@ def pparr(
     lines: list[str] = msje.splitlines()
     
     wlines = [format(lines[0], True)]
-    for l in lines[1:]:
-        wlines.append(format(l, False))
+    for ln in lines[1:]:
+        wlines.append(format(ln, False))
     
     fmt = '\n'.join(wlines)
 
