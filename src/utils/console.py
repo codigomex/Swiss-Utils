@@ -127,7 +127,7 @@ def op_yn(indent: str = SNG) -> bool:
             sleep(0.2)
 
 
-def waiti(sangria: str = SNG, msg: str = '') -> None:
+def waiti(msg: str = '', sangria: str = SNG) -> None:
     """
     Presenta un input con una sangría y un mensaje vacío, sangría y mensaje se
     pueden cambiar desde donde se llame el def.
