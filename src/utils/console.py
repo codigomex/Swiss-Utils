@@ -127,8 +127,9 @@ def op_yn(indent: str = SNG) -> bool:
             sleep(0.2)
 
 
-def waiti(msg: str = '', sangria: str = SNG) -> None:
+def waiti(msg: str = '', sangria: str = SNG, nl_antes=0, nl_despues=0) -> None:
     """
+    Wrapper de pparr.
     Presenta un input con una sangría y un mensaje vacío, sangría y mensaje se
     pueden cambiar desde donde se llame el def.
     Se usa principalmente para eso, presentar un input como una pausa que se elimina
@@ -137,7 +138,7 @@ def waiti(msg: str = '', sangria: str = SNG) -> None:
     :param msg: mensaje
     :return: nada
     """
-    input(f'{sangria}{msg}')
+    input(pparr(msje=msg, indent=sangria, nl_antes=nl_antes, nl_despues=nl_despues))
 
 
 def tellme(sangria: str = SNG, msg: str = '') -> str:
