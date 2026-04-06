@@ -1,12 +1,10 @@
-import ctypes
-import os
 import textwrap
 from datetime import datetime
 from subprocess import run
 from time import sleep
 from typing import Literal
 
-from .config import DT_FMT, SNG, STDOUT_WIDTH
+from .config import DT_FMT, OS_NAME, SNG, STDOUT_WIDTH
 
 
 def ask_valida(
@@ -46,7 +44,7 @@ def clear() -> None:
     """
     Limpia la pantalla de comandos
     """
-    command: Literal['cls', 'clear'] = 'cls' if os.name == 'nt' else 'clear'
+    command: Literal['cls', 'clear'] = 'cls' if OS_NAME == 'Windows' else 'clear'
     run(args=command, shell=True, check=False)
 
 
@@ -56,12 +54,12 @@ def window_title(title: str) -> None:
     :param title: título
     :return: nada
     """
-    if os.name == 'nt':
-        ctypes.windll.kernel32.SetConsoleTitleW(title)  # type: ignore
-    elif os.name == 'posix':
+    if OS_NAME == 'Windows':
+        import ctypes
+
+        ctypes.windll.kernel32.SetConsoleTitleW(title)
+    elif OS_NAME in ['Linux', 'Darwin']:
         print(f'\33]0;{title}\a', end='', flush=True)
-    else:
-        raise Exception(f'OS Desconocido: {os.name}!!!')
 
 
 def _parr(

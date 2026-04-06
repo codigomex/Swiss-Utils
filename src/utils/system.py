@@ -6,7 +6,7 @@ from subprocess import DEVNULL, Popen, check_call
 from time import sleep
 from typing import Never
 
-from .config import SNG, TMP_DIR, TXT_APP
+from .config import OS_NAME, SNG, TMP_DIR, TXT_APP
 from .console import ask_valida, pparr
 from .format import random_string, str_now
 
@@ -17,22 +17,26 @@ def exec_file(file_path: Path) -> bool:
     :param file_path: ruta al archivo
     :return: bool indicando exito
     """
-    if sys.platform == 'win32':
-        os.startfile(path=file_path)
-        return True
 
-    elif sys.platform == 'darwin':
-        with open(os.devnull, 'w') as f:
-            check_call(['open', file_path], stdout=f, stderr=f)
-        return True
+    try:
+        # Ya se validó que OS_NAME solo tenga uno de estos 3 valores
+        if OS_NAME == 'Windows':
+            startfile = getattr(os, 'startfile', lambda path: None)
+            startfile(path=file_path)
+            return True
+        elif OS_NAME == 'Darwin':
+            with open(os.devnull, 'w') as f:
+                check_call(['open', file_path], stdout=f, stderr=f)
+            return True
+        elif OS_NAME == 'Linux':
+            with open(os.devnull, 'w') as f:
+                check_call(['xdg-open', file_path], stdout=f, stderr=f)
+            return True
 
-    elif os.name == 'posix':
-        with open(os.devnull, 'w') as f:
-            check_call(['xdg-open', file_path], stdout=f, stderr=f)
-        return True
-
-    else:
+    except Exception as _:
         return False
+    
+    return False
 
 
 def salir(msje: str = '', out_code: int = 0) -> Never:
@@ -143,8 +147,8 @@ def file_check(filepath: Path) -> None:
 
 def get_user_input(q: str = '') -> list[str]:
     """
-    Pregunta la pregunta "q" y abre un archivo de texto para dejar que el usuario escriba
-    la respuesta a la pregunta, se regresa la respuesta como una lista de strs
+    Pregunta la pregunta "q" y abre un archivo de texto para dejar que el usuario
+    escriba la respuesta a la pregunta, se regresa la respuesta como una lista de strs
     :param q: pregunta
     :return: lista de respuestas
     """
