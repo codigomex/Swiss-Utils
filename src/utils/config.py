@@ -1,4 +1,5 @@
 import platform
+import re
 import shutil
 from pathlib import Path
 from tempfile import gettempdir
@@ -31,3 +32,6 @@ TXT_APP: Final[list[str]] = _os_apps[OS_NAME]
 
 # formato general para fechas
 DT_FMT: Final[str] = '%Y-%m-%d'
+
+# para localizar y eliminar caracteres ANSI
+ANSI_ESCAPE: Final[re.Pattern] = re.compile(r'\033\[[0-9]?[0-9]m')

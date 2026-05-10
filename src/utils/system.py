@@ -21,8 +21,7 @@ def exec_file(file_path: Path) -> bool:
     try:
         # Ya se validó que OS_NAME solo tenga uno de estos 3 valores
         if OS_NAME == 'Windows':
-            startfile = getattr(os, 'startfile', lambda path: None)
-            startfile(path=file_path)
+            os.startfile(str(file_path))
             return True
         elif OS_NAME == 'Darwin':
             with open(os.devnull, 'w') as f:
@@ -54,7 +53,7 @@ def salir(msje: str = '', out_code: int = 0) -> Never:
     sys.exit(out_code)
 
 
-def show_tmp(st: str, espera: bool = False) -> None:
+def show_tmp(st: str, espera: bool = False, ext: str = 'txt') -> None:
     """
     Recibe un str y lo guarda en un archivo de texto temporal en
     el folder temporal definido globalmente, para ello genera un
@@ -68,7 +67,7 @@ def show_tmp(st: str, espera: bool = False) -> None:
     if not TMP_DIR.exists():
         raise Exception('TMP_DIR no existe')
     # nombre de archivo
-    fname: Path = tmp_fname(ext='txt')
+    fname: Path = tmp_fname(ext=ext)
     # escribe a archivo
     with open(fname, 'w', encoding='utf8') as f:
         f.write(st)

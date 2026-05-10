@@ -15,7 +15,7 @@ from .console import (
     window_title,
 )
 from .data import comp_dicts, show_data
-from .format import fmt_tm, random_string, str_now
+from .format import fmt_tm, random_string, str_now, no_ansi, cl
 from .forms import pic_dir, pic_file
 from .math import div_prec, precise_round, qseconds
 from .py import inmutable
@@ -54,6 +54,8 @@ __all__ = [
     'random_string',
     'str_now',
     'fmt_tm',
+    'no_ansi',
+    'cl',
     # Forms
     'pic_dir',
     'pic_file',
