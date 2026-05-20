@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import traceback
 from pathlib import Path
 from subprocess import DEVNULL, Popen, check_call
 from time import sleep
@@ -34,11 +35,11 @@ def exec_file(file_path: Path) -> bool:
 
     except Exception as _:
         return False
-    
+
     return False
 
 
-def salir(msje: str = '', out_code: int = 0) -> Never:
+def exit(msje: str = '', out_code: int = 0, wait: bool = False) -> Never:
     """
     Sale del programa
     :param msje: mensaje anunciando porqué se sale
@@ -48,8 +49,9 @@ def salir(msje: str = '', out_code: int = 0) -> Never:
 
     if msje:
         pparr(msje, nl_antes=2)
-    pparr('Presione Enter para Salir...')
-    input(SNG)
+    if wait:
+        pparr('Presione Enter para Salir...')
+        input(SNG)
     sys.exit(out_code)
 
 
@@ -165,3 +167,14 @@ def get_user_input(q: str = '') -> list[str]:
         data: str = f.read()
 
     return data.splitlines()
+
+
+def where_err() -> str | None:
+    """Returns 'LnNumber: Code' from the actual exception or None"""
+    _, _, tb = sys.exc_info()
+
+    if tb:
+        resumen = traceback.extract_tb(tb)
+        _, linea, _, texto = resumen[-1]
+        return f'{linea}: {texto}'
+    return None

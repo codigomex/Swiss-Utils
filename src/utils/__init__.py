@@ -24,9 +24,10 @@ from .system import (
     file_check,
     get_user_input,
     init_tmp,
-    salir,
+    exit,
     show_tmp,
     tmp_fname,
+    where_err,
 )
 from .units import in_to_pt, mm_to_pt, px_to_mm, px_to_pt, pt_to_mm, pt_to_in
 
@@ -68,11 +69,12 @@ __all__ = [
     # System
     'exec_file',
     'init_tmp',
-    'salir',
+    'exit',
     'show_tmp',
     'tmp_fname',
     'file_check',
     'get_user_input',
+    'where_err',
     # Units
     'px_to_mm',
     'mm_to_pt',
