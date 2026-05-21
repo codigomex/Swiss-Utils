@@ -14,7 +14,7 @@ from .console import (
     waiti,
     window_title,
 )
-from .data import comp_dicts, show_data
+from .data import comp_dicts, show_data, octa_uuid
 from .format import fmt_tm, random_string, str_now, no_ansi, cl
 from .forms import pic_dir, pic_file
 from .math import div_prec, precise_round, qseconds
@@ -51,6 +51,7 @@ __all__ = [
     # Data
     'comp_dicts',
     'show_data',
+    'octa_uuid',
     # Format
     'random_string',
     'str_now',
