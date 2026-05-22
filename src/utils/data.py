@@ -1,7 +1,24 @@
+import secrets
 from pprint import pformat
 from typing import Any
 
 from .system import show_tmp
+
+
+def octa_uuid(fmt: bool = True, comparar: list[str] | None = None) -> str:
+    """
+    Genera un identificador hexadecimal de 8 caracteres.
+    Ejemplo: 'A1B2-C3D4' o 'A1B2C3D4'
+    """
+
+    while True:
+        token = secrets.token_hex(4).upper()
+        ret = f'{token[:4]}-{token[4:]}' if fmt else token
+        if comparar:
+            if ret not in comparar:
+                return ret
+        else:
+            return ret
 
 
 def comp_dicts(new: dict[Any, Any], old: dict[Any, Any]) -> tuple[bool, list[str]]:
@@ -22,7 +39,7 @@ def comp_dicts(new: dict[Any, Any], old: dict[Any, Any]) -> tuple[bool, list[str
     # Campos nuevos y eliminados
     for k in k_new - k_old:
         diffs.append(f'Nuevo Campo: [{k}] = {new[k]}')
-        
+
     for k in k_old - k_new:
         diffs.append(f'Campo Suprimido: [{k}] = {old[k]}')
 
@@ -45,6 +62,5 @@ def show_data(data: dict[str, object]) -> None:
     for k, v in data.items():
         # Usamos v.__dict__ directo como prefieres
         ret.append(f'KEY {k}\n{pformat(v.__dict__, width=70)}\n')
-    
-    show_tmp('\n'.join(ret))
 
+    show_tmp('\n'.join(ret))
