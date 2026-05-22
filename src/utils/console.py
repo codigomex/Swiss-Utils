@@ -92,7 +92,7 @@ def _parr(
         wlines.append(format_line(ln, False))
 
     fmt = '\n'.join(wlines)
-    return f"{'\n' * nl_antes}{fmt}{'\n' * nl_despues}"
+    return f'{"\n" * nl_antes}{fmt}{"\n" * nl_despues}'
 
 
 def pparr(

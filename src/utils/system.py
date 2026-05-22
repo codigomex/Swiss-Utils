@@ -5,7 +5,7 @@ import traceback
 from pathlib import Path
 from subprocess import DEVNULL, Popen, check_call
 from time import sleep
-from typing import Never
+from typing import Never, Optional
 
 from .config import OS_NAME, SNG, TMP_DIR, TXT_APP
 from .console import ask_valida, pparr
@@ -39,10 +39,11 @@ def exec_file(file_path: Path) -> bool:
     return False
 
 
-def exit(msje: str = '', out_code: int = 0, wait: bool = False) -> Never:
+def exit(msje: str = '', wait: str = '', out_code: int = 0) -> Never:
     """
     Sale del programa
     :param msje: mensaje anunciando porqué se sale
+    :param wait: mensaje pidiendo que espere y de enter
     :param out_code: si se quiere dar un código numéricoc a sys.exit()
     :return: nada
     """
@@ -50,7 +51,7 @@ def exit(msje: str = '', out_code: int = 0, wait: bool = False) -> Never:
     if msje:
         pparr(msje, nl_antes=2)
     if wait:
-        pparr('Presione Enter para Salir...')
+        pparr(wait)
         input(SNG)
     sys.exit(out_code)
 
