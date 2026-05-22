@@ -1,10 +1,66 @@
 import textwrap
 from datetime import datetime
 from subprocess import run
+from threading import Event, Thread
 from time import sleep
 from typing import Literal
 
 from .config import DT_FMT, OS_NAME, SNG, STDOUT_WIDTH
+
+_stop_event = None
+_dot_thread = None
+
+
+def draw_progress_bar(percentage: int) -> None:
+    """Renders a scannable progress bar in the terminal."""
+
+    nobar = STDOUT_WIDTH - 9
+
+    bar_length = nobar if nobar > 30 else 30
+    filled_length = int(bar_length * percentage // 100)
+
+    # Constructing the visual block [██████░░░░░░░░░]
+    bar = '█' * filled_length + '░' * (bar_length - filled_length)
+
+    # \r forces the cursor to the start of the line, avoiding scrolling down
+    print(f'\r[{bar}] {percentage}%', end='', flush=True)
+
+    # Print a new line only when completely finished
+    if percentage == 100:
+        print()
+
+
+def _waiting_dot(stop_event: Event, char: str, delay: float) -> None:
+    """Internal function that runs in the background thread."""
+    while not stop_event.is_set():
+        print(f'{char}', end='', flush=True)
+        stop_event.wait(delay)
+
+
+def start_dots(char: str = '.', delay: float = 0.5) -> None:
+    """Starts the background dot animation safely."""
+    global _stop_event, _dot_thread
+
+    if _dot_thread and _dot_thread.is_alive():
+        return
+
+    _stop_event = Event()
+    _dot_thread = Thread(
+        target=_waiting_dot, args=(_stop_event, char, delay), daemon=True
+    )
+    _dot_thread.start()
+
+
+def stop_dots() -> None:
+    """Stops the background dot animation and cleans up."""
+    global _stop_event, _dot_thread
+
+    if _stop_event and _dot_thread:
+        _stop_event.set()
+        _dot_thread.join()
+        print()
+        _stop_event = None
+        _dot_thread = None
 
 
 def ask_valida(
