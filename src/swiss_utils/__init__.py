@@ -34,8 +34,6 @@ from .system import (
 )
 from .units import in_to_pt, mm_to_pt, pt_to_in, pt_to_mm, px_to_mm, px_to_pt
 
-# El __all__ le dice a Basedpyright y a Python qué nombres
-# se exportan oficialmente desde este paquete.
 __all__ = [
     # Console
     'ask_verif',

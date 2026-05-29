@@ -1,3 +1,9 @@
+__all__ = [
+    'pic_dir',
+    'pic_file',
+]
+
+
 import tkinter as tk
 from pathlib import Path
 from tkinter import Tk, filedialog

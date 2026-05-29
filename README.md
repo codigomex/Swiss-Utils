@@ -1,7 +1,7 @@
 # Swiss-Utils – Essential Python Utilities
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://python.org)
-[![License](https://shields.io/github/license/AnzhiZhang/PlayerBehaviorRecord?label=License)](LICENSE)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 
 A collection of **battle‑tested** utility modules for everyday Python tasks: console interaction, file dialogs, precise arithmetic, data handling, string formatting, system operations, and more.
 

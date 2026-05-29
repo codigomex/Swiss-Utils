@@ -1,3 +1,5 @@
+__all__ = ['immutable']
+
 from typing import Any, Type, TypeVar, cast
 
 T = TypeVar('T')
