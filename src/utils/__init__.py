@@ -1,11 +1,11 @@
 # Importamos las funciones de cada módulo usando rutas relativas (.)
 from .console import (
+    ask_choice,
+    ask_choices,
     ask_date,
     ask_date_fmt_iso8601,
-    ask_tipo,
-    ask_unico,
-    ask_valida,
-    ask_varios,
+    ask_type,
+    ask_verif,
     clear,
     draw_progress_bar,
     op_yn,
@@ -21,7 +21,7 @@ from .data import comp_dicts, octa_uuid, show_data
 from .format import cl, fmt_tm, no_ansi, random_string, str_now
 from .forms import pic_dir, pic_file
 from .math import div_prec, precise_round, qseconds
-from .py import inmutable
+from .py import immutable
 from .system import (
     exec_file,
     exit,
@@ -38,7 +38,7 @@ from .units import in_to_pt, mm_to_pt, pt_to_in, pt_to_mm, px_to_mm, px_to_pt
 # se exportan oficialmente desde este paquete.
 __all__ = [
     # Console
-    'ask_valida',
+    'ask_verif',
     'clear',
     'draw_progress_bar',
     'pparr',
@@ -50,9 +50,9 @@ __all__ = [
     'tellme',
     'tobool',
     'ask_date',
-    'ask_tipo',
-    'ask_varios',
-    'ask_unico',
+    'ask_type',
+    'ask_choice',
+    'ask_choices',
     'ask_date_fmt_iso8601',
     # Data
     'comp_dicts',
@@ -72,7 +72,7 @@ __all__ = [
     'qseconds',
     'div_prec',
     # Py
-    'inmutable',
+    'immutable',
     # System
     'exec_file',
     'init_tmp',

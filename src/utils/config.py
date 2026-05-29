@@ -5,23 +5,22 @@ from pathlib import Path
 from tempfile import gettempdir
 from typing import Final
 
-# sistema operativo, se asegura que sea Win, Mac, Linux
+# OS, ensures it is Win, Mac, or Linux
 OS_NAME = platform.system()
 if OS_NAME not in ['Linux', 'Windows', 'Darwin']:
-    raise RuntimeError(f'OS Desconocido: {OS_NAME}')
+    raise RuntimeError(f'Unknown OS: {OS_NAME}')
 
-# formato en consola
-SNG: Final[str] = '> '
+# Console format
+IND: Final[str] = '> '
 
-# ancho de consola, solo para que al dar formato no lleguen los renglones hasta
-# el final de la consola
+# Console width, prevents formatted lines from reaching the edge
 _stdout_width, _ = shutil.get_terminal_size()
 STDOUT_WIDTH: Final[int] = _stdout_width
 
-# directorio temporal
+# Temporary directory
 TMP_DIR: Final[Path] = Path(gettempdir()) / 'PyProjects'
 
-# editor de texto según el os, definimos el mapa de opciones
+# Text editor based on OS options map
 _os_apps: dict[str, list[str]] = {
     'Windows': [r'C:\Windows\notepad.exe'],
     'Linux': ['kwrite'],
@@ -30,8 +29,8 @@ _os_apps: dict[str, list[str]] = {
 
 TXT_APP: Final[list[str]] = _os_apps[OS_NAME]
 
-# formato general para fechas
+# General date format
 DT_FMT: Final[str] = '%Y-%m-%d'
 
-# para localizar y eliminar caracteres ANSI
+# To locate and remove ANSI characters
 ANSI_ESCAPE: Final[re.Pattern] = re.compile(r'\033\[[0-9]?[0-9]m')

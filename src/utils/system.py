@@ -5,22 +5,21 @@ import traceback
 from pathlib import Path
 from subprocess import DEVNULL, Popen, check_call
 from time import sleep
-from typing import Never, Optional
+from typing import Never
 
-from .config import OS_NAME, SNG, TMP_DIR, TXT_APP
-from .console import ask_valida, pparr
+from .config import IND, OS_NAME, TMP_DIR, TXT_APP
+from .console import ask_verif, pparr
 from .format import random_string, str_now
 
 
 def exec_file(file_path: Path) -> bool:
     """
-    Ejecuta un programa con la aplicación asociadad y continua
-    :param file_path: ruta al archivo
-    :return: bool indicando exito
+    Executes a program with its associated application and continues.
+    :param file_path: path to the file
+    :return: bool indicating success
     """
-
     try:
-        # Ya se validó que OS_NAME solo tenga uno de estos 3 valores
+        # OS_NAME was already validated to be one of these 3 values
         if OS_NAME == 'Windows':
             os.startfile(str(file_path))
             return True
@@ -39,122 +38,118 @@ def exec_file(file_path: Path) -> bool:
     return False
 
 
-def exit(msje: str = '', wait: str = '', out_code: int = 0) -> Never:
+def exit(message: str = '', wait: str = '', out_code: int = 0) -> Never:
     """
-    Sale del programa
-    :param msje: mensaje anunciando porqué se sale
-    :param wait: mensaje pidiendo que espere y de enter
-    :param out_code: si se quiere dar un código numéricoc a sys.exit()
-    :return: nada
+    Exits the program.
+    :param message: message announcing the reason for exiting
+    :param wait: message asking to wait for user to press enter
+    :param out_code: numeric code passed to sys.exit()
+    :return: Never
     """
-
-    if msje:
-        pparr(msje, nl_antes=2)
+    if message:
+        pparr(message, nl_bfore=2)
     if wait:
         pparr(wait)
-        input(SNG)
+        input(IND)
     sys.exit(out_code)
 
 
-def show_tmp(st: str, espera: bool = False, ext: str = 'txt') -> None:
+def show_tmp(st: str, wait: bool = False, ext: str = 'txt') -> None:
     """
-    Recibe un str y lo guarda en un archivo de texto temporal en
-    el folder temporal definido globalmente, para ello genera un
-    nombre de archivo aleatorio.
-    :param st: str a mostrar
-    :param espera: bool, si se detiene el programa hasta que se cierre el proc.
-    :return: nada
+    Receives a string and saves it to a temporary text file in
+    the global temporary folder using a random file name.
+    :param st: str to display
+    :param wait: bool, pauses the program until the process is closed
+    :param ext: file extension string
+    :return: None
     """
-
-    # valida que exista el dir temporal
+    # Validate that the temp directory exists
     if not TMP_DIR.exists():
-        raise Exception('TMP_DIR no existe')
-    # nombre de archivo
+        raise Exception('TMP_DIR does not exist')
+
+    # File name
     fname: Path = tmp_fname(ext=ext)
-    # escribe a archivo
+
+    # Write to file
     with open(fname, 'w', encoding='utf8') as f:
         f.write(st)
-    # lo muestra y sale
+
+    # Show it and exit
     av: Popen[bytes] = Popen[bytes]([*TXT_APP, fname], stdout=DEVNULL, stderr=DEVNULL)
-    if espera:
+    if wait:
         av.wait()
 
 
 def tmp_fname(ext: str) -> Path:
     """
-    Genera un nombre de archivo en el dir temporal, notar que
-    no genera el archivo
-    :param ext: extensión sin el punto
-    :return: ruta al archivo
+    Generates a file name in the temporary directory. Does not
+    create the file itself.
+    :param ext: extension without the dot
+    :return: path to the file
     """
-
-    # Limpiamos la extensión por si acaso traía punto
+    # Clean the extension just in case it had a dot
     ext = ext.lstrip('.')
 
     while True:
-        # nombre de archivo
+        # File name
         name: str = f'{str_now()}_{random_string(3)}.{ext}'
         fname: Path = TMP_DIR / name
 
-        # revisamos si existe
+        # Check if it exists
         if not fname.exists():
             return fname
-        # si existe esperamos 1 segundo y volvemos a intentar,
-        # desde que el nombre de archivo depende del tiempo y trae
-        # un str random es de esperarse que el nuevo nombre no
-        # exista
+
+        # If it exists, wait 1 second and try again
         else:
             sleep(1)
 
 
-def init_tmp(borrar: bool = False) -> None:
+def init_tmp(delete: bool = False) -> None:
     """
-    Si no existe el directorio temporal, lo genera
-    :return: nada
+    Creates the temporary directory if it does not exist.
+    :param delete: if True, deletes the directory first if it exists
+    :return: None
     """
-
-    # si existe y no se pidió borrar no se hace nada
+    # If it exists and deletion wasn't requested, do nothing
     if TMP_DIR.exists():
-        if borrar:
+        if delete:
             shutil.rmtree(TMP_DIR)
-            os.mkdir(TMP_DIR)
+            TMP_DIR.mkdir(parents=True, exist_ok=True)
     else:
-        os.mkdir(TMP_DIR)
+        TMP_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def file_check(filepath: Path) -> None:
     """
-    Revisa si existe un archivo, caso no esté, da opción de esperar o salir.
-    :param filepath: ruta Path al archivo
-    :return: nada
+    Checks if a file exists. If not, gives the option to wait or exit.
+    :param filepath: Path to the file
+    :return: None
     """
-
     while True:
         if filepath.exists():
             break
         else:
             pparr(
-                f'{SNG}No se localiza el archivo:\n  {filepath}\n{SNG}¿Desea '
-                f'(a)Asegurarse que Exista o (s)Salir? '
-                f'(solo recuerde que es posible que haya información que se pierda)'
+                f'{IND}File not found:\n  {filepath}\n{IND}Do you want to '
+                f'(a)Assure it exists or (s)Stop? '
+                f'(remember that some data might be lost)'
             )
-            op_fc: str = ask_valida('', *list[str]('aAsS'))
+            op_fc: str = ask_verif('', *list[str]('aAsS'))
             if op_fc.lower() == 'a':
-                input('> Oprima Enter para Continuar...')
+                input('> Press Enter to Continue...')
             else:
-                print('> Saliendo...')
+                print('> Exiting...')
                 sleep(0.5)
                 exit()
 
 
 def get_user_input(q: str = '') -> list[str]:
     """
-    Pregunta la pregunta "q" y abre un archivo de texto para dejar que el usuario
-    escriba la respuesta a la pregunta, se regresa la respuesta como una lista de strs
-    :param q: pregunta
-    :return: lista de respuestas
+    Asks a question and opens a text file to let the user write
+    the answer. Returns the response as a list of strings.
+    :param q: question prompt
+    :return: list of response strings
     """
-
     if q:
         print(q)
 
@@ -171,7 +166,10 @@ def get_user_input(q: str = '') -> list[str]:
 
 
 def where_err() -> str | None:
-    """Returns 'LnNumber: Code' from the actual exception or None"""
+    """
+    Returns 'LnNumber: Code' from the actual exception or None.
+    :return: formatted error string or None
+    """
     _, _, tb = sys.exc_info()
 
     if tb:

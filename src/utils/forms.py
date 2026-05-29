@@ -1,39 +1,38 @@
-from pathlib import Path
 import tkinter as tk
+from pathlib import Path
 from tkinter import Tk, filedialog
 from typing import Optional
 
 
 def pic_dir(dir_init: Path) -> Optional[Path]:
     """
-    Abre un diólogo en Tk para escoger un directorio, devuelve la ruta a éste o
-    None en caso de cancelación.
-    :param dir_init: str, ruta inicial
-    :return: ruta al dir escogido
+    Opens a Tk dialog to choose a directory. Returns the path or None
+    in case of cancellation.
+    :param dir_init: Path, initial directory
+    :return: path to the chosen directory or None
     """
-
     root = tk.Tk()
     root.withdraw()
-    ret: str = filedialog.askdirectory(initialdir=dir_init, title="Seleccione")
+    ret: str = filedialog.askdirectory(initialdir=dir_init, title='Select')
+    root.destroy()
     return Path(ret) if ret else None
 
 
-def pic_file(dir_init: Path, ext: str = "txt") -> Optional[Path]:
+def pic_file(dir_init: Path, ext: str = 'txt') -> Optional[Path]:
     """
-    Dioálogo para seleccionar un archivo con extensión "ext",
-    iniciando en "dir_init"
-    :param dir_init: directorio inicial
-    :param ext: extensión del archivo, sin punto
-    :return:
+    Dialog to select a file with the given extension 'ext',
+    starting in 'dir_init'.
+    :param dir_init: initial directory
+    :param ext: file extension, without dot
+    :return: path to the chosen file or None
     """
-
     root: Tk = tk.Tk()
     root.withdraw()
 
     file_path: str = filedialog.askopenfilename(
-        title="Seleccione Un Archivo:",
+        title='Select a File:',
         initialdir=dir_init,
-        filetypes=[(f"Archivos {ext.upper()}", f".{ext.lower()}")],
+        filetypes=[(f'{ext.upper()} Files', f'*.{ext.lower()}')],
     )
-
-    return Path(file_path) if file_path else None 
+    root.destroy()
+    return Path(file_path) if file_path else None

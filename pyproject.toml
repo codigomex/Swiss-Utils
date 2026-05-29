@@ -1,14 +1,21 @@
 [project]
-name = "utils"
+name = "py-utils"
 version = "1.0.0"
-description = "Utilerías varias"
+description = "Essential Python utilities for console, math, system, and more"
 readme = "README.md"
-authors = [
-    {name = "Gerardo Rodríguez", email = "jerardorch@gmail.com"}
-]
+authors = [{ name = "Gerardo Rodríguez", email = "jerardorch@gmail.com" }]
+license = { text = "GPL-3.0-only" }
 requires-python = ">=3.12"
 dependencies = []
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
 
 [build-system]
-requires = ["uv_build>=0.10.10,<1.0.0"]
-build-backend = "uv_build"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
