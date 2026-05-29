@@ -1,4 +1,4 @@
-# PyUtils – Essential Python Utilities
+# Py-Utils – Essential Python Utilities
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://python.org)
 [![License](https://shields.io/github/license/AnzhiZhang/PlayerBehaviorRecord?label=License)](LICENSE)
@@ -12,14 +12,20 @@ A collection of **battle‑tested** utility modules for everyday Python tasks: c
 ## 📦 Installation
 
 ```bash
-pip install pyutils   # once published
+pip install py-utils 
+```
+
+Or using UV:
+
+```bash
+uv add py-utils
 ```
 
 Or clone & install manually:
 
 ```bash
-git clone https://github.com/yourusername/pyutils.git
-cd pyutils
+git clone https://github.com/codigomex/Py-Utils.git
+cd py_utils
 pip install -e .
 ```
 
@@ -28,9 +34,12 @@ pip install -e .
 ## 🚀 Quick Start
 
 ```python
-from pyutils.console import pparr, ask_type, clear
-from pyutils.math import div_prec, precise_round
-from pyutils.system import show_tmp, init_tmp
+from py_utils.console import pparr, ask_type, clear
+from py_utils.math import div_prec, precise_round
+from py_utils.system import show_tmp, init_tmp
+
+# Or you can import everything using (eg):
+# from py_utils import div_prec, init_tmp, pparr, etc.
 
 # Clear terminal and print formatted message
 clear()
@@ -71,7 +80,8 @@ show_tmp("Important data\nLine 2", wait=True)
 ### 1. Console & User Input
 
 ```python
-from pyutils.console import ask_verif, ask_date, op_yn, draw_progress_bar
+# py_utils.console
+from py_utils import ask_verif, ask_date, op_yn, draw_progress_bar
 
 # Yes/No prompt
 if op_yn():
@@ -91,7 +101,8 @@ for p in range(0, 101, 10):
 ### 2. Immutable Classes
 
 ```python
-from pyutils.py import immutable
+# py_utils.py
+from py_utils import immutable
 
 @immutable
 class Config:
@@ -106,7 +117,8 @@ cfg.host = "other"   # ❌ raises AttributeError
 ### 3. Precise Arithmetic
 
 ```python
-from pyutils.math import div_prec, precise_round
+# py_utils.math
+from py_utils import div_prec, precise_round
 from decimal import ROUND_DOWN
 
 # Division with 6 decimal places
@@ -119,7 +131,9 @@ rounded = precise_round(3.14159, decimals=4, rounding_mode=ROUND_DOWN)  # 3.1415
 ### 4. Temporary Files / System
 
 ```python
-from pyutils.system import init_tmp, show_tmp, get_user_input
+
+# py_utils.system
+from py_utils import init_tmp, show_tmp, get_user_input
 
 init_tmp(delete=True)          # clean previous temp dir
 
@@ -134,7 +148,8 @@ show_tmp("Debug info:\n" + str(some_dict), wait=False)
 ### 5. File Dialogs (no extra GUI loops)
 
 ```python
-from pyutils.forms import pic_dir, pic_file
+# py_utils.forms
+from py_utils import pic_dir, pic_file
 
 folder = pic_dir(Path.home())      # returns Path or None
 file   = pic_file(Path.cwd(), ext="json")
@@ -143,7 +158,8 @@ file   = pic_file(Path.cwd(), ext="json")
 ### 6. Colors & Formatting
 
 ```python
-from pyutils.format import cl
+# py_utils.format
+from py_utils import cl
 
 print(f"{cl.bgreen}Success!{cl.endc}")
 print(f"{cl.red}Error:{cl.endc} Something went wrong")
@@ -158,64 +174,14 @@ print(f"{cl.red}Error:{cl.endc} Something went wrong")
 pytest tests/
 
 # Static type check
-mypy pyutils/
+mypy py_utils/
 ```
 
----
-
-## 📦 Publishing to PyPI (once you're ready)
-
-1. Create `pyproject.toml` or `setup.py` (example below).
-2. Build:
-   ```bash
-   python -m build
-   ```
-3. Upload:
-   ```bash
-   twine upload dist/*
-   ```
-
-**Minimal `setup.py`** (place in project root):
-
-```python
-from setuptools import setup, find_packages
-
-setup(
-    name="pyutils",
-    version="0.1.0",
-    author="Your Name",
-    description="Essential Python utilities for console, math, system, and more",
-    long_description=open("README.md", encoding="utf-8").read(),
-    long_description_content_type="text/markdown",
-    packages=find_packages(),
-    python_requires=">=3.8",
-    license="MIT",
-)
-```
-
----
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first.
-
----
+Pull requests are welcome [@codigomex](https://github.com/codigomex)! For major changes, please open an issue first.
 
 ## 📄 License
 
-[GPL‑3.0](LICENSE) © CodeMex
-```
-
----
-
-## 📌 Additional Recommendations
-
-1. **Create a `LICENSE` file** – choose MIT, Apache‑2.0, or GPL‑3.0.
-2. **Add type hints** – your code already has many, that’s great.
-3. **Write unit tests** – at least for `math`, `data`, `units`.
-4. **Fix the minor issues** in `console.py`:
-   - The parameter in `ask_verif` docstring says `resps` but actual name is `answers`.
-   - In `ask_choices`, the parameter `*options` is correct but the docstring mentions `resps` again.
-5. **`div_prec`** – you currently return `Decimal('0')` when `d == 0`. You previously discussed raising `DivisionByZero`. I recommend removing that special case and letting the exception propagate (or catching it inside if you prefer `None`). For now it’s okay.
-
-Would you like me to also help you write the `setup.py` / `pyproject.toml` and the `__init__.py` to expose the public API? Just let me know.
+[GPL‑3.0](LICENSE) © CodigoMex
