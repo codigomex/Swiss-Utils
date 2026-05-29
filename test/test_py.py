@@ -1,6 +1,6 @@
 import pytest
 
-from py_utils.py import immutable
+from swiss_utils.py import immutable
 
 
 def test_immutable_class() -> None:
@@ -11,10 +11,10 @@ def test_immutable_class() -> None:
             self.y = y
 
     obj = DataConfig(10, 20)
-    
+
     # Values are assigned correctly upon init
     assert obj.x == 10
-    
+
     # Mutation raises an error
     with pytest.raises(AttributeError):
         obj.x = 15

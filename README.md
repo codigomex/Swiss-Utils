@@ -1,4 +1,4 @@
-# Py-Utils – Essential Python Utilities
+# Swiss-Utils – Essential Python Utilities
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://python.org)
 [![License](https://shields.io/github/license/AnzhiZhang/PlayerBehaviorRecord?label=License)](LICENSE)
@@ -24,7 +24,7 @@ uv add py-utils
 Or clone & install manually:
 
 ```bash
-git clone https://github.com/codigomex/Py-Utils.git
+git clone https://github.com/codigomex/Swiss-Utils.git
 cd py_utils
 pip install -e .
 ```
@@ -34,12 +34,12 @@ pip install -e .
 ## 🚀 Quick Start
 
 ```python
-from py_utils.console import pparr, ask_type, clear
-from py_utils.math import div_prec, precise_round
-from py_utils.system import show_tmp, init_tmp
+from swiss_utils.console import pparr, ask_type, clear
+from swiss_utils.math import div_prec, precise_round
+from swiss_utils.system import show_tmp, init_tmp
 
 # Or you can import everything using (eg):
-# from py_utils import div_prec, init_tmp, pparr, etc.
+# from swiss_utils import div_prec, init_tmp, pparr, etc.
 
 # Clear terminal and print formatted message
 clear()
@@ -80,8 +80,8 @@ show_tmp("Important data\nLine 2", wait=True)
 ### 1. Console & User Input
 
 ```python
-# py_utils.console
-from py_utils import ask_verif, ask_date, op_yn, draw_progress_bar
+# swiss_utils.console
+from swiss_utils import ask_verif, ask_date, op_yn, draw_progress_bar
 
 # Yes/No prompt
 if op_yn():
@@ -101,8 +101,8 @@ for p in range(0, 101, 10):
 ### 2. Immutable Classes
 
 ```python
-# py_utils.py
-from py_utils import immutable
+# swiss_utils.py
+from swiss_utils import immutable
 
 @immutable
 class Config:
@@ -117,8 +117,8 @@ cfg.host = "other"   # ❌ raises AttributeError
 ### 3. Precise Arithmetic
 
 ```python
-# py_utils.math
-from py_utils import div_prec, precise_round
+# swiss_utils.math
+from swiss_utils import div_prec, precise_round
 from decimal import ROUND_DOWN
 
 # Division with 6 decimal places
@@ -132,8 +132,8 @@ rounded = precise_round(3.14159, decimals=4, rounding_mode=ROUND_DOWN)  # 3.1415
 
 ```python
 
-# py_utils.system
-from py_utils import init_tmp, show_tmp, get_user_input
+# swiss_utils.system
+from swiss_utils import init_tmp, show_tmp, get_user_input
 
 init_tmp(delete=True)          # clean previous temp dir
 
@@ -148,8 +148,8 @@ show_tmp("Debug info:\n" + str(some_dict), wait=False)
 ### 5. File Dialogs (no extra GUI loops)
 
 ```python
-# py_utils.forms
-from py_utils import pic_dir, pic_file
+# swiss_utils.forms
+from swiss_utils import pic_dir, pic_file
 
 folder = pic_dir(Path.home())      # returns Path or None
 file   = pic_file(Path.cwd(), ext="json")
@@ -158,8 +158,8 @@ file   = pic_file(Path.cwd(), ext="json")
 ### 6. Colors & Formatting
 
 ```python
-# py_utils.format
-from py_utils import cl
+# swiss_utils.format
+from swiss_utils import cl
 
 print(f"{cl.bgreen}Success!{cl.endc}")
 print(f"{cl.red}Error:{cl.endc} Something went wrong")

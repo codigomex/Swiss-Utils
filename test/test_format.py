@@ -1,6 +1,6 @@
 import re
 
-from py_utils.format import fmt_tm, no_ansi, random_string, str_now
+from swiss_utils.format import fmt_tm, no_ansi, random_string, str_now
 
 
 def test_random_string_length() -> None:

@@ -1,6 +1,6 @@
 [project]
-name = "py-utils"
-version = "1.0.0"
+name = "swiss-utils"
+version = "1.0.1"
 description = "Essential Python utilities for console, math, system, and more"
 readme = "README.md"
 authors = [{ name = "Gerardo Rodríguez", email = "jerardorch@gmail.com" }]
@@ -21,7 +21,9 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [dependency-groups]
-dev = ["pytest>=9.0.3"]
+dev = [
+    "pytest>=9.0.3",
+]
 
 [project.optional-dependencies]
 test = ["pytest>=9.0.3"]

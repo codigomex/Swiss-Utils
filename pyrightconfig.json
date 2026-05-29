@@ -1,10 +1,4 @@
 {
   "include": ["."],
-  "pythonPlatform": "All",
-  "executionEnvironments": [
-    {
-      "root": ".",
-      "pythonPlatform": "Windows"
-    }
-  ]
+  "pythonPlatform": "All"
 }
