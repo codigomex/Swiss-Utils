@@ -12,20 +12,20 @@ A collection of **battle‑tested** utility modules for everyday Python tasks: c
 ## 📦 Installation
 
 ```bash
-pip install py-utils 
+pip install swiss-utils 
 ```
 
 Or using UV:
 
 ```bash
-uv add py-utils
+uv add swiss-utils
 ```
 
 Or clone & install manually:
 
 ```bash
 git clone https://github.com/codigomex/Swiss-Utils.git
-cd py_utils
+cd swiss_utils
 pip install -e .
 ```
 
@@ -174,7 +174,7 @@ print(f"{cl.red}Error:{cl.endc} Something went wrong")
 pytest tests/
 
 # Static type check
-mypy py_utils/
+mypy swiss_utils/
 ```
 
 
